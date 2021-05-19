@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class DanInfoDialog : MonoBehaviour
 {
     [SerializeField] private Text txtDan;
-    [SerializeField] private RewardItemDialog itemPrefab;
+    [SerializeField] private RewardItem itemPrefab;
     [SerializeField] private Transform content;
 
     public Scrollbar scrollbar;
     
-    private List<RewardItemDialog> itemConfigsList = new List<RewardItemDialog>();      //item数据列表
+    private List<RewardItem> itemConfigsList = new List<RewardItem>();      //item数据列表
 
     private int rewardInterval;     //奖励分数间隔
     private int maxScore;           //最高分数
@@ -29,7 +29,9 @@ public class DanInfoDialog : MonoBehaviour
         rewardGold = 200;           //奖励金币数
     }
     
-    //初始化
+    /// <summary>
+    /// 初始化
+    /// </summary>
     public void Init()
     {
         for (int score = minScore, i = 0; score <= maxScore; score += rewardInterval, i++)
@@ -37,9 +39,8 @@ public class DanInfoDialog : MonoBehaviour
             ItemConfig itemConfig = new ItemConfig();
             itemConfig.score = score;
             itemConfig.gold = rewardGold;
-            itemConfig.id = i;
 
-            RewardItemDialog item = Instantiate(itemPrefab, content);
+            RewardItem item = Instantiate(itemPrefab, content);
             item.Init(itemConfig);
             itemConfigsList.Add(item);
         }
@@ -65,28 +66,36 @@ public class DanInfoDialog : MonoBehaviour
         }
     }
 
-    //分数改变时奖励刷新
+    /// <summary>
+    /// 分数改变时奖励刷新
+    /// </summary>
+    /// <param name="score"></param>
     private void RewardRefresh(int score)
     {
         if (score >= 4000)
         {
-            foreach (RewardItemDialog item in itemConfigsList)
+            foreach (RewardItem item in itemConfigsList)
             {
                 item.SetRewardButton(item.itemConfig.isAwarded);
             }
         }
     }
 
-    //赛季刷新时更新奖励
+    /// <summary>
+    /// 赛季刷新时更新奖励
+    /// </summary>
+    /// <param name="season"></param>
     private void SeasonRefresh(int season)
     {
-        foreach (RewardItemDialog item in itemConfigsList)
+        foreach (RewardItem item in itemConfigsList)
         {
             item.itemConfig.isAwarded = false;
         }
     }
     
-    //关闭界面
+    /// <summary>
+    /// 关闭界面
+    /// </summary>
     public void Close()
     {
         gameObject.SetActive(false);

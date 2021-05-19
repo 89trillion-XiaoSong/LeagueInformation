@@ -56,7 +56,7 @@
      <Compile Include="Assets\LeagueInfo\Script\LeagueInfo\UI\DanInfoDialog.cs" />
      <Compile Include="Assets\LeagueInfo\Script\LeagueInfo\UI\MainMenu.cs" />
      <Compile Include="Assets\LeagueInfo\Script\LeagueInfo\UI\MainMenuRefresh.cs" />
-     <Compile Include="Assets\LeagueInfo\Script\LeagueInfo\UI\RewardItemDialog.cs" />
+     <Compile Include="Assets\LeagueInfo\Script\LeagueInfo\UI\RewardItem.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/fengxiaosong/Desktop/Unity项目/League Information/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

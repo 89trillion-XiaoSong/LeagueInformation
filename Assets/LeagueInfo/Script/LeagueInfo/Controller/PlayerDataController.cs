@@ -1,5 +1,8 @@
 ﻿public class PlayerDataController
 {
+    /// <summary>
+    /// 赛季更新
+    /// </summary>
     public void seasonChange()
     {
         int playerScore = PlayerData.instance.Score;

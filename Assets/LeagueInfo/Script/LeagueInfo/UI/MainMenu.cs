@@ -20,13 +20,17 @@ public class MainMenu : MonoBehaviour
         addSeason = 1;
     }
 
-    //增加分数按钮
+    /// <summary>
+    /// 增加分数按钮点击事件
+    /// </summary>
     public void AddScoreClick()
     {
         PlayerData.instance.Score += addScore;
     }
 
-    //段位信息按钮
+    /// <summary>
+    /// 段位信息按钮点击事件
+    /// </summary>
     public void DanInformationClick()
     {
         if (!DanInfoIsInit)
@@ -45,7 +49,9 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    //赛季刷新按钮
+    /// <summary>
+    /// 赛季刷新按钮
+    /// </summary>
     public void NextSeasonClick()
     {
         PlayerData.instance.Season += addSeason;
