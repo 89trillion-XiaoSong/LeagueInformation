@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RewardItemDialog: MonoBehaviour
@@ -10,16 +8,15 @@ public class RewardItemDialog: MonoBehaviour
     [SerializeField] private Button btnAward;
     [SerializeField] private Text txtAward;
 
-    private ItemConfig _itemConfig = new ItemConfig();
+    public ItemConfig itemConfig;
     
+    //初始化
     public void Init(ItemConfig itemConfig)
     {
-        _itemConfig = itemConfig;
+        this.itemConfig = itemConfig;
         txtScore.text = itemConfig.score.ToString();
-        if (itemConfig.isAwarded)
-        {
-            SetRewardButton(itemConfig.isAwarded);
-        }
+
+        SetRewardButton(itemConfig.isAwarded);
 
         switch (itemConfig.score)
         {
@@ -36,28 +33,37 @@ public class RewardItemDialog: MonoBehaviour
                 btnAward.gameObject.SetActive(false);
                 break;
             default:
-                txtGold.text = itemConfig.gold.ToString();
+                txtGold.text = itemConfig.gold + "金币";
                 btnAward.gameObject.SetActive(true);
                 break;
         }
     }
 
+    //领取按钮点击
     public void GetRewardClick()
     {
         if (txtGold.IsActive())
         {
-            PlayerData.instance.Gold += _itemConfig.gold;
+            PlayerData.instance.Gold += itemConfig.gold;
         }
-        _itemConfig.isAwarded = true;
-        SetRewardButton(_itemConfig.isAwarded);
+        itemConfig.isAwarded = true;
+        SetRewardButton(itemConfig.isAwarded);
     }
 
-    private void SetRewardButton(bool isAwarded)
+    //设置领取按钮状态
+    public void SetRewardButton(bool isAwarded)
     {
         if (!isAwarded)
         {
-            btnAward.interactable = true;
             txtAward.text = "领取";
+            if (itemConfig.score > PlayerData.instance.Score)
+            {
+                btnAward.interactable = false;
+            }
+            else
+            {
+                btnAward.interactable = true;
+            }
         }
         else
         {

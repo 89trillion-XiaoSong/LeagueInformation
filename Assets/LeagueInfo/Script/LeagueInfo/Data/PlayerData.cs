@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public  class PlayerData : MonoBehaviour
 {
-    private int score = 0;
-    private int gold = 0;
-    private int season = 0;
+    private int score;      //分数
+    private int gold;       //金币
+    private int season;     //赛季
 
     public delegate void MenuRefreshEventHanlder(int i);
 
@@ -33,10 +30,7 @@ public  class PlayerData : MonoBehaviour
         }
         set
         {
-            if (score < 6000)
-            {
-                score = value;
-            }
+            score = value < 6000 ? value : 6000;
             
             if (scoreChangeEvent != null)
             {

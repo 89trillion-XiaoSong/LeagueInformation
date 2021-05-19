@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuRefresh : MonoBehaviour
@@ -10,22 +9,25 @@ public class MainMenuRefresh : MonoBehaviour
 
     private void Start()
     {
-        PlayerData.instance.scoreChangeEvent += SetScore;
-        PlayerData.instance.goldChangeEvent += SetGold;
-        PlayerData.instance.seasonChangeEvent += SetSeason;
+        PlayerData.instance.scoreChangeEvent += ScoreRefresh;
+        PlayerData.instance.goldChangeEvent += GoldRefresh;
+        PlayerData.instance.seasonChangeEvent += SeasonRefresh;
     }
 
-    private void SetScore(int score)
+    //分数刷新
+    private void ScoreRefresh(int score)
     {
         txtScore.text = score.ToString();
     }
 
-    private void SetGold(int gold)
+    //金币刷新
+    private void GoldRefresh(int gold)
     {
         txtGold.text = gold.ToString();
     }
 
-    private void SetSeason(int season)
+    //赛季刷新
+    private void SeasonRefresh(int season)
     {
         txtSeason.text = season.ToString();
     }

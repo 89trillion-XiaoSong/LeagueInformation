@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private DanInfoDialog _danInfoDialog; 
+    [SerializeField] private DanInfoDialog danInfoDialog; 
     
-    private int addScore;
-    private int addSeason;
-    private bool DanInfoIsInit;
+    private int addScore;           //分数增加数值
+    private int addSeason;          //赛季增加数值
+    private bool DanInfoIsInit;     //判断段位页面是否初始化
 
-    private PlayerDataController _playerDataController = new PlayerDataController();
+    private PlayerDataController playerDataController = new PlayerDataController();
+    private DanInfoDialog infoDialog;
     
     private void Start()
     {
@@ -19,27 +17,28 @@ public class MainMenu : MonoBehaviour
         addSeason = 1;
     }
 
-    //增加分数
+    //增加分数按钮
     public void AddScoreClick()
     {
         PlayerData.instance.Score += addScore;
     }
 
-    //段位信息
+    //段位信息按钮
     public void DanInformationClick()
     {
-        _danInfoDialog.gameObject.SetActive(true);
         if (!DanInfoIsInit)
         {
-            _danInfoDialog.Init();
+            infoDialog = Instantiate(danInfoDialog,transform.parent);
+            infoDialog.Init();
             DanInfoIsInit = true;
         }
+        infoDialog.gameObject.SetActive(true);
     }
 
-    //赛季刷新
+    //赛季刷新按钮
     public void NextSeasonClick()
     {
         PlayerData.instance.Season += addSeason;
-       _playerDataController.seasonChange();
+        playerDataController.seasonChange();
     }
 }

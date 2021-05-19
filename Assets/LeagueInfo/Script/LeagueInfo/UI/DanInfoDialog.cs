@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,22 +8,26 @@ public class DanInfoDialog : MonoBehaviour
     [SerializeField] private RewardItemDialog itemPrefab;
     [SerializeField] private Transform content;
     
-    private List<RewardItemDialog> _itemConfigs = new List<RewardItemDialog>();
+    private List<RewardItemDialog> itemConfigsList = new List<RewardItemDialog>();      //item数据列表
 
-    private int rewardInterval;
-    private int maxScore;
-    private int minScore;
-    private int rewardGold;
+    private int rewardInterval;     //奖励分数间隔
+    private int maxScore;           //最高分数
+    private int minScore;           //奖励起始分数
+    private int rewardGold;         //奖励金币
     
-    private void Start()
+    private void Awake()
     {
-        PlayerData.instance.scoreChangeEvent += SetDan;
-        rewardInterval = 200;
-        minScore = 4000;
-        maxScore = 6000;
-        rewardGold = 200;
+        PlayerData.instance.scoreChangeEvent += SetDan;             //刷新段位
+        PlayerData.instance.scoreChangeEvent += RewardRefresh;      //奖励刷新事件
+        PlayerData.instance.seasonChangeEvent += SeasonRefresh;     //赛季刷新事件
+        
+        rewardInterval = 200;       //奖励间隔
+        minScore = 4000;            //最小奖励分数
+        maxScore = 6000;            //最大奖励分数
+        rewardGold = 200;           //奖励金币数
     }
-
+    
+    //初始化
     public void Init()
     {
         for (int score = minScore, i = 0; score <= maxScore; score += rewardInterval, i++)
@@ -37,10 +39,11 @@ public class DanInfoDialog : MonoBehaviour
 
             RewardItemDialog item = Instantiate(itemPrefab, content);
             item.Init(itemConfig);
-            _itemConfigs.Add(item);
+            itemConfigsList.Add(item);
         }
     }
     
+    //设置段位显示
     private void SetDan(int score)
     {
         switch (score/1000)
@@ -59,7 +62,29 @@ public class DanInfoDialog : MonoBehaviour
                 break;
         }
     }
+
+    //分数改变时奖励刷新
+    private void RewardRefresh(int score)
+    {
+        if (score >= 4000)
+        {
+            foreach (RewardItemDialog item in itemConfigsList)
+            {
+                item.SetRewardButton(item.itemConfig.isAwarded);
+            }
+        }
+    }
+
+    //赛季刷新时更新奖励
+    private void SeasonRefresh(int season)
+    {
+        foreach (RewardItemDialog item in itemConfigsList)
+        {
+            item.itemConfig.isAwarded = false;
+        }
+    }
     
+    //关闭界面
     public void Close()
     {
         gameObject.SetActive(false);
