@@ -6,7 +6,7 @@ public class MainMenuRefresh : MonoBehaviour
     [SerializeField] private Text txtScore;
     [SerializeField] private Text txtGold;
     [SerializeField] private Text txtSeason;
-
+    
     private void Start()
     {
         PlayerData.instance.scoreChangeEvent += ScoreRefresh;

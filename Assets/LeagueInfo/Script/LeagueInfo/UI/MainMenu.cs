@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MainMenu : MonoBehaviour
 
     private PlayerDataController playerDataController = new PlayerDataController();
     private DanInfoDialog infoDialog;
+    
+    private Scrollbar scrollbar;
     
     private void Start()
     {
@@ -30,9 +33,16 @@ public class MainMenu : MonoBehaviour
         {
             infoDialog = Instantiate(danInfoDialog,transform.parent);
             infoDialog.Init();
+            scrollbar = infoDialog.scrollbar;
             DanInfoIsInit = true;
         }
         infoDialog.gameObject.SetActive(true);
+        if (PlayerData.instance.Score > 4000)
+        {
+            float f = PlayerData.instance.Score - 4000;
+            scrollbar.value = 1 - f / 2000f;
+        }
+        
     }
 
     //赛季刷新按钮

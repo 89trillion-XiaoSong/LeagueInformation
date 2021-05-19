@@ -7,6 +7,8 @@ public class DanInfoDialog : MonoBehaviour
     [SerializeField] private Text txtDan;
     [SerializeField] private RewardItemDialog itemPrefab;
     [SerializeField] private Transform content;
+
+    public Scrollbar scrollbar;
     
     private List<RewardItemDialog> itemConfigsList = new List<RewardItemDialog>();      //item数据列表
 
